@@ -1,6 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-primary">
+  <nav class="navbar navbar-expand-lg bg-primary sticky-top">
     <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <span class="fw-light text-light">get</span>
+        <span class="fw-normal text-light">day</span>
+        <span class="fw-bold text-light">trends</span>
+      </a>
+      <!-- btn for responsive -->
       <button
         class="navbar-toggler"
         type="button"
@@ -14,28 +20,16 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
             <button
               type="button"
-              class="btn btn-outline-light"
-              data-bs-toggle="dropdown"
+              class="btn btn-outline-light border-2 mt-2"
               aria-expanded="false"
             >
-              VietNam <font-awesome-icon icon="fa-caret-down" />
+              <span class="fs-6">
+                Vietnam
+              </span>  <font-awesome-icon icon="fa-caret-down" />
             </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul> 
-          </li>
-          <select class="form-select text-light  bg-primary" aria-label="Default select example" >
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+            
         </ul>
         <form class="d-flex" role="search">
           <input
@@ -44,8 +38,12 @@
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-outline-light border-2" type="submit">Search </button>
         </form>
+        <div>
+          <button type="button" class="btn btn-outline-light rounded-circle mx-2 my-2 border-2"><span><font-awesome-icon icon="fa-regular fa-user" /></span></button>
+          
+        </div>
       </div>
     </div>
   </nav>
