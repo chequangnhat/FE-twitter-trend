@@ -4,7 +4,7 @@
     <div class="container-md vh-100">
       <div class="row gx-4 gy-2 h-100 mt-3 ">
         <div class="col-lg-8">
-          <div class="bg-white h-100 border border-secondary-subtle rounded">
+          <div class="bg-white h-100 border border-secondary-subtle rounded p-0">
             Custom column padding
             <TrendItem />
             <TrendItem />
