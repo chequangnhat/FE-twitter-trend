@@ -1,50 +1,25 @@
+<script setup></script>
+
 <template>
-  <nav class="navbar navbar-expand-lg bg-primary sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <span class="fw-light text-light">get</span>
-        <span class="fw-normal text-light">day</span>
-        <span class="fw-bold text-light">trends</span>
-      </a>
-      <!-- btn for responsive -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <button
-              type="button"
-              class="btn btn-outline-light border-2 mt-2"
-              aria-expanded="false"
-            >
-              <span class="fs-6">
-                Vietnam
-              </span>  <font-awesome-icon icon="fa-caret-down" />
-            </button>
-            
-        </ul>
-        <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-light border-2" type="submit">Search </button>
-        </form>
-        <div>
-          <button type="button" class="btn btn-outline-light rounded-circle mx-2 my-2 border-2"><span><font-awesome-icon icon="fa-regular fa-user" /></span></button>
-          
-        </div>
+  <div
+    class="header text-white text-2xl w-full h-14 bg-blue-500 mx-auto sticky top-0 flex items-center justify-between p-2"
+  >
+    <div class="left-content flex items-center">
+      <div class="header-title mx-3">
+        <span class="font-light">get</span>
+        <span class="font-normal">day</span>
+        <span class="font-semibold">trends</span>
       </div>
+      <button
+        class="border border-solid border-white rounded px-2 py-1 text-base hover:bg-white hover:text-black"
+        type="button"
+      >
+        <span class="mr-2">Worldwide</span>
+        <span><font-awesome-icon icon="fa-solid fa-caret-down" /></span>
+      </button>
     </div>
-  </nav>
+    <div class="right-content">
+      <input class="rounded-md pl-2 py-1 text-base text-black" type="text" placeholder="Search...">
+    </div>
+  </div>
 </template>
