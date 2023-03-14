@@ -19,7 +19,7 @@
       </button>
     </div>
     <div class="right-content">
-      <input class="rounded-md pl-2 py-1 text-base text-black" type="text" placeholder="Search...">
+      <input class="rounded-md pl-2 py-1 text-base placeholder:text-white outline-none bg-blue-400 focus:bg-white focus:text-black" type="text" placeholder="Search...">
     </div>
   </div>
 </template>
