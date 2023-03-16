@@ -1,13 +1,15 @@
-<template lang="">
-  <div>
-    hello, this is login page
-  </div>
-</template>
-<script>
-export default {
-  
-}
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const submitLogin = () => {
+  router.push("/home");
+  console.log("clicked");
+};
 </script>
-<style lang="">
-  
-</style>
+
+<template lang="">
+  <div>hello, this is login page</div>
+  <button type="button" @click="submitLogin()">login</button>
+</template>

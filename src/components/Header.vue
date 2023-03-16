@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter()
+
+  const userInfo = () => {
+    console.log("user info clicked")
+    router.push("/user/1")
+  }
+</script>
 
 <template>
   <div
@@ -18,8 +27,13 @@
         <span><font-awesome-icon icon="fa-solid fa-caret-down" /></span>
       </button>
     </div>
-    <div class="right-content">
+    <div class="right-content ">
       <input class="rounded-md pl-2 py-1 text-base placeholder:text-white outline-none bg-blue-400 focus:bg-white focus:text-black" type="text" placeholder="Search...">
+      <button class="border rounded-full w-10 h-10" @click="userInfo()">
+      <div >
+        <font-awesome-icon icon="fa-solid fa-user" />
+      </div>
+      </button>
     </div>
   </div>
 </template>
