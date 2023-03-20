@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import { ref, watch, onBeforeMount } from "vue";
+import { ref, watch, onBeforeMount, onMounted, onUpdated } from "vue";
 import Header from "../components/Header.vue";
 import TrendItem from "../components/TrendItem.vue";
 import axios from "axios"
@@ -33,12 +33,21 @@ const get_data = async () => {
   console.log(response.value.data["result"]["trends"])
   list_trends.value = response.value.data["result"]["trends"]
 
-  // list_trends.value.forEach( (item, index) => {
-  //   trend_store.create(item)
-  // })
+  list_trends.value.forEach( (item, index) => {
+    trend_store.create(item)
+  })
 }
 onBeforeMount(()=>{
   get_data()
+})
+
+onUpdated(()=>{
+  console.log("onMounted")
+  console.log("onMounted", trend_store.trends)
+})
+
+watch(trend_store,()=>{
+  console.log("watch", trend_store.trends)
 })
 
 </script>
@@ -53,6 +62,8 @@ onBeforeMount(()=>{
         <div
           class="left-trend-content bg-white w-11/12 mx-auto xl:w-3/5 xl:mb-0 h-fit"
         >
+        <!-- <div v-for="(trend, index) in list_trends">{{ index+1 }}: {{ trend["name"] }}, {{ trend["tweet_volume"] == None ? "under 10k" : trend["tweet_volume"] }}</div> -->
+        <TrendItem v-for="(trend, index) in list_trends" :trend_index="index" :trend="trend"></TrendItem>
           <!-- <TrendItem v-for="trend in list_trends" :trend="trend" :index="index"/> -->
           <!-- <TrendItem />
         <TrendItem />
