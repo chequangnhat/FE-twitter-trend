@@ -4,7 +4,8 @@ export const useTrendsStore = defineStore("trends", {
   state: () => {
     return {
       trends: [],
-      liked: []
+      liked: [],
+      woeid: "1",
     };
   },
   actions: {
@@ -17,6 +18,9 @@ export const useTrendsStore = defineStore("trends", {
       this.liked.push({
         ...trend,
       });
+    },
+    changeWoeid(woeid){
+      this.woeid = woeid;
     }
   },
 });

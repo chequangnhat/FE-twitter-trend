@@ -1,12 +1,27 @@
 <script setup>
-  import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useTrendsStore } from "../stores/trends";
 
-  const router = useRouter()
+const router = useRouter();
 
-  const userInfo = () => {
-    console.log("user info clicked")
-    router.push("/user/1")
-  }
+const trend_store = useTrendsStore();
+
+const userInfo = () => {
+  console.log("user info clicked");
+  router.push("/user/1");
+};
+
+const location_selected = ref("1");
+watch(location_selected, () => {
+  console.log("location_selected", location_selected.value);
+});
+
+watch(location_selected, () => {
+  console.log("location_change")
+  
+  trend_store.changeWoeid(location_selected.value)
+})
 </script>
 
 <template>
@@ -19,20 +34,27 @@
         <span class="font-normal">day</span>
         <span class="font-semibold">trends</span>
       </div>
-      <button
-        class="border border-solid border-white rounded px-2 py-1 text-base hover:bg-white hover:text-black"
-        type="button"
+
+      <select
+        v-model="location_selected"
+        class="text-white bg-blue-500 border rounded text-base py-1 outline-none w-28"
+        value="Worldwide"
       >
-        <span class="mr-2">Worldwide</span>
-        <span><font-awesome-icon icon="fa-solid fa-caret-down" /></span>
-      </button>
+        <option class="text-black bg-white" value="1" >Worldwide</option>
+        <option class="text-black bg-white" value="23424984">Vietnam</option>
+        <option class="text-black bg-white" value="23424856">Japan</option>
+      </select>
     </div>
     <div class="right-content flex items-center">
-      <input class="rounded-md pl-2 py-2 my-auto text-base placeholder:text-white outline-none bg-blue-400 focus:bg-white focus:text-black" type="text" placeholder="Search...">
+      <input
+        class="rounded-md pl-2 py-2 my-auto text-base placeholder:text-white outline-none bg-blue-400 focus:bg-white focus:text-black"
+        type="text"
+        placeholder="Search..."
+      />
       <button class="ml-3 border-2 rounded-full w-10 h-10" @click="userInfo()">
-      <div class="flex items-center justify-center" >
-        <font-awesome-icon icon="fa-solid fa-user" class="text-lg"/>
-      </div>
+        <div class="flex items-center justify-center">
+          <font-awesome-icon icon="fa-solid fa-user" class="text-lg" />
+        </div>
       </button>
     </div>
   </div>
