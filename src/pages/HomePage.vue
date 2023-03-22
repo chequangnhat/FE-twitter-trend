@@ -1,28 +1,36 @@
 <script setup>
-import { RouterLink, RouterView, useRouter } from "vue-router";
+import { RouterLink, RouterView, useRouter, useRoute } from "vue-router";
 import { ref, watch, onBeforeMount, computed, onMounted, onUpdated } from "vue";
 import TrendItem from "../components/TrendItem.vue";
 import axios from "axios";
 import { useTrendsStore } from "../stores/trends";
 
 const router = useRouter();
+const route = useRoute();
 
 const trend_store = useTrendsStore();
 const list_trends = ref([]);
 
-const loopNum = ref(5);
+const loopNum = ref(10);
 const toggleShow = ref(true);
 
-const woeid = computed(()=>trend_store.woeid);
+const trends = computed(() => {
+  console.log("list_trends computed", list_trends.value.slice(0, loopNum));
+  return list_trends.value.slice(0, loopNum.value);
+});
+
+const woeid = computed(() => trend_store.woeid);
 
 const increaseLoopNum = () => {
-  loopNum.value = 20;
+  loopNum.value = 50;
   toggleShow.value = !toggleShow.value;
+  console.log("loopNum: " + loopNum.value);
 };
 
 const decreaseLoopNum = () => {
-  loopNum.value = 5;
+  loopNum.value = 10;
   toggleShow.value = !toggleShow.value;
+  console.log("loopNum: " + loopNum.value);
 };
 
 const response = ref([]);
@@ -33,7 +41,7 @@ const get_data = async () => {
     // "http://127.0.0.1:8000/twittertrendapp/trends"
     `http://127.0.0.1:8000/twittertrendapp/get_trends_with_woeid/${woeid.value}`
   );
-  console.log(response.value.data["woeid"]);
+  // console.log(response.value.data["woeid"]);
 
   console.log(response.value.data["result"]["trends"]);
   list_trends.value = response.value.data["result"]["trends"];
@@ -41,20 +49,30 @@ const get_data = async () => {
   list_trends.value.forEach((item, index) => {
     trend_store.create(item);
   });
+
+  return list_trends.value;
 };
+
 onBeforeMount(() => {
+  console.log("onBeforeMount");
   get_data();
 });
 
+onMounted(() => {
+  console.log("mounted");
+  console.log("trends", trends.value);
+});
+
 onUpdated(() => {
-  console.log("onMounted");
-  console.log("onMounted", trend_store.trends);
+  console.log("updated");
+  console.log("updated", trend_store.trends);
+  console.log("list_trends", list_trends.value);
+  console.log("trends update", trends.value);
 });
 
 watch(woeid, () => {
   console.log("watch", woeid.value);
   get_data();
-
 });
 </script>
 
@@ -65,44 +83,38 @@ watch(woeid, () => {
         class="trend-container max-w-7xl flex md:flex-col xl:justify-between xl:flex-row flex-wrap mx-auto"
       >
         <div
-          class="left-trend-content bg-white w-11/12 mx-auto xl:w-3/5 xl:mb-0 h-fit"
+          class="left-trend-content bg-white w-11/12 mx-auto xl:w-3/5 xl:mb-0 h-fit border-r border-l border-b"
         >
-          <!-- <div v-for="(trend, index) in list_trends">{{ index+1 }}: {{ trend["name"] }}, {{ trend["tweet_volume"] == None ? "under 10k" : trend["tweet_volume"] }}</div> -->
-
-          <div v-if="list_trends.length > 0">
+          <div v-if="trends.length">
             <TrendItem
-              v-for="(trend, index) in list_trends"
+              v-for="(trend, index) in trends"
               :trend_index="index"
               :trend="trend"
-              @click="router.push(`/trend/${index}`)"
+              @click="router.push(`/${route.params.country}/trend/${index}`)"
             ></TrendItem>
           </div>
           <div v-else>
             <p class="">loading...</p>
           </div>
-
-          <button
-            v-if="toggleShow"
-            class="border border-solid border-black rounded px-2 py-1 text-base hover:bg-white hover:text-black mx-auto"
-            type="button"
-            @click="increaseLoopNum()"
-          >
-            <span class="mr-2">show more</span>
-          </button>
-          <button
-            v-if="!toggleShow"
-            class="border border-solid border-black rounded px-2 py-1 text-base hover:bg-white hover:text-black mx-auto"
-            type="button"
-            @click="decreaseLoopNum()"
-          >
-            <span class="mr-2">show less</span>
-          </button>
+          <div class="toogle-button-container w-full flex justify-center items-center p-2 ">
+            <button
+              v-if="toggleShow"
+              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white  text-blue-500 font-semibold flex justify-center items-center"
+              type="button"
+              @click="increaseLoopNum()"
+            >
+              <div>show more</div>
+            </button>
+            <button
+              v-if="!toggleShow"
+              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white  text-blue-500 font-semibold flex justify-center items-center"
+              type="button"
+              @click="decreaseLoopNum()"
+            >
+              <span class="mr-2">show less</span>
+            </button>
+          </div>
         </div>
-        <!-- <div
-          class="right-trend-content bg-white min-[0px]:mt-5 w-11/12 mx-auto xl:w-2/6 xl:mt-0 h-fit"
-        >
-          
-        </div> -->
       </div>
     </div>
   </div>

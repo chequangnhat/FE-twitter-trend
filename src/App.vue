@@ -5,8 +5,11 @@ import Header from "./components/Header.vue"
 </script>
 
 <template>
-    <Header />
-    <RouterView />
+    <div class="bg-slate-100 h-screen w-full">
+        <Header />
+        <RouterView />
+    </div>
+    
 </template>
 
 <style scoped></style>

@@ -19,7 +19,7 @@ watch(location_selected, () => {
 
 watch(location_selected, () => {
   console.log("location_change")
-  
+  router.push(`/home/${location_selected.value}`)
   trend_store.changeWoeid(location_selected.value)
 })
 </script>
@@ -40,7 +40,7 @@ watch(location_selected, () => {
         class="text-white bg-blue-500 border rounded text-base py-1 outline-none w-28"
         value="Worldwide"
       >
-        <option class="text-black bg-white" value="1" >Worldwide</option>
+        <option class="text-black bg-white" value="1">Worldwide</option>
         <option class="text-black bg-white" value="23424984">Vietnam</option>
         <option class="text-black bg-white" value="23424856">Japan</option>
       </select>

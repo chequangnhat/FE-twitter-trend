@@ -1,13 +1,17 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useTrendsStore } from "../stores/trends";
+
+const trend_store = useTrendsStore();
+
 
 const router = useRouter();
 const userName = ref("")
 const password = ref("")
 
 const submitLogin = () => {
-  router.push("/home");
+  router.push(`/home/${trend_store.woeid}`);
   console.log("clicked");
 };
 </script>

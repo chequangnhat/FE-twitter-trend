@@ -20,9 +20,14 @@ const router = createRouter({
       component: App,
      
     },
+    // {
+    //   path: '/home',
+    //   name: 'home',
+    //   component: HomePage
+    // },
     {
-      path: '/home',
-      name: 'home',
+      path: '/home/:country',
+      name: 'country',
       component: HomePage
     },
     {
@@ -31,7 +36,7 @@ const router = createRouter({
       component: UserInformation
     },
     {
-      path: '/trend/:index',
+      path: '/:country/trend/:index',
       name: 'trend',
       component: TrendDetail
     },
