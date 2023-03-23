@@ -19,6 +19,9 @@ export const useTrendsStore = defineStore("trends", {
         ...trend,
       });
     },
+    deleteAllTrends(){
+      this.trends.splice(0, this.trends.length);
+    },
     changeWoeid(woeid){
       this.woeid = woeid;
     }

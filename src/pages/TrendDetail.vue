@@ -1,12 +1,14 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { useTrendsStore } from "../stores/trends";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const route = useRoute();
 const trend_store = useTrendsStore();
 
-const trend_item = trend_store.trends[route.params.index];
+const trend_item = computed(()=>{
+  return trend_store.trends[route.params.index];
+})
 const location =
   route.params.country == 1
     ? "Worldwide"

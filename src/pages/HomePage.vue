@@ -16,7 +16,8 @@ const toggleShow = ref(true);
 
 const trends = computed(() => {
   console.log("list_trends computed", list_trends.value.slice(0, loopNum));
-  return list_trends.value.slice(0, loopNum.value);
+  // return list_trends.value.slice(0, loopNum.value);
+  return trend_store.trends.slice(0, loopNum.value);
 });
 
 const woeid = computed(() => trend_store.woeid);
@@ -37,14 +38,14 @@ const response = ref([]);
 
 const get_data = async () => {
   response.value = await axios.get(
-    // "https://backend-twitter-trend-production.up.railway.app/twittertrendapp/trends"
-    // "http://127.0.0.1:8000/twittertrendapp/trends"
     `http://127.0.0.1:8000/twittertrendapp/get_trends_with_woeid/${woeid.value}`
   );
-  // console.log(response.value.data["woeid"]);
 
   console.log(response.value.data["result"]["trends"]);
   list_trends.value = response.value.data["result"]["trends"];
+  if (trend_store.trends.length > 0) {
+    trend_store.deleteAllTrends();
+  }
 
   list_trends.value.forEach((item, index) => {
     trend_store.create(item);
@@ -55,7 +56,10 @@ const get_data = async () => {
 
 onBeforeMount(() => {
   console.log("onBeforeMount");
-  get_data();
+  if(trend_store.trends.length == 0) {
+    console.log("trends length equal to 0")
+    get_data();
+  }
 });
 
 onMounted(() => {
@@ -72,7 +76,9 @@ onUpdated(() => {
 
 watch(woeid, () => {
   console.log("watch", woeid.value);
+  console.log("get data in watch again ");
   get_data();
+  console.log("trend store in watch", trend_store.trends);
 });
 </script>
 
@@ -96,10 +102,12 @@ watch(woeid, () => {
           <div v-else>
             <p class="">loading...</p>
           </div>
-          <div class="toogle-button-container w-full flex justify-center items-center p-2 ">
+          <div
+            class="toogle-button-container w-full flex justify-center items-center p-2"
+          >
             <button
               v-if="toggleShow"
-              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white  text-blue-500 font-semibold flex justify-center items-center"
+              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white text-blue-500 font-semibold flex justify-center items-center"
               type="button"
               @click="increaseLoopNum()"
             >
@@ -107,7 +115,7 @@ watch(woeid, () => {
             </button>
             <button
               v-if="!toggleShow"
-              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white  text-blue-500 font-semibold flex justify-center items-center"
+              class="border border-blue-500 border-solid rounded px-3 py-1 text-base hover:bg-blue-500 hover:text-white mx-auto bg-white text-blue-500 font-semibold flex justify-center items-center"
               type="button"
               @click="decreaseLoopNum()"
             >
