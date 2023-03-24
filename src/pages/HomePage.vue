@@ -38,9 +38,14 @@ const response = ref([]);
 
 const get_data = async () => {
   response.value = await axios.get(
-    `http://127.0.0.1:8000/twittertrendapp/get_trends_with_woeid/${woeid.value}`
+    // `http://127.0.0.1:8000/twittertrendapp/get_trends_with_woeid/${woeid.value}`
+    `http://127.0.0.1:8000/trendapp/get_something/${woeid.value}/`,
+    { headers: {"Authorization" : `Bearer ${localStorage.getItem("access")}`}}
   );
+  console.log("localStorage.getItem(): ",localStorage.getItem("access"))
 
+  
+  console.log(response.value.data["id_user"]);
   console.log(response.value.data["result"]["trends"]);
   list_trends.value = response.value.data["result"]["trends"];
   if (trend_store.trends.length > 0) {
