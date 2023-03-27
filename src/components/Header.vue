@@ -2,10 +2,12 @@
 import { useRouter } from "vue-router";
 import { ref, watch } from "vue";
 import { useTrendsStore } from "../stores/trends";
+import { useLoginStore } from "../stores/login";
 
 const router = useRouter();
 
 const trend_store = useTrendsStore();
+const login_store = useLoginStore();
 
 const userInfo = () => {
   console.log("user info clicked");
@@ -51,10 +53,17 @@ watch(location_selected, () => {
         type="text"
         placeholder="Search..."
       />
-      <button class="ml-3 border-2 rounded-full w-10 h-10" @click="userInfo()">
+
+      <button v-if="login_store.isLogin" class="ml-3 border-2 rounded-full w-10 h-10" @click="userInfo()">
         <div class="flex items-center justify-center">
           <font-awesome-icon icon="fa-solid fa-user" class="text-lg" />
         </div>
+      </button>
+      <button v-if="login_store.isLogin" class="border py-1 px-2 rounded-md ml-3"  @click="login_store.Logout">
+       <p class="text-base">Logout</p> 
+      </button>
+      <button v-if="!login_store.isLogin" class="border py-1 px-2 rounded-md ml-3" @click="router.push('/login')">
+       <p class="text-base">login</p> 
       </button>
     </div>
   </div>

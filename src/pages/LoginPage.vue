@@ -3,8 +3,10 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useTrendsStore } from "../stores/trends";
 import axios from "axios";
+import { useLoginStore } from "../stores/login";
 
 const trend_store = useTrendsStore();
+const login_store = useLoginStore();
 
 const router = useRouter();
 const userName = ref("");
@@ -18,6 +20,7 @@ const password = ref("");
 const response = ref(null);
 
 const submitLogin = async () => {
+  login_store.Login()
   response.value = await axios.post(
     "http://127.0.0.1:8000/trendapp/api/token/",
     { username: userName.value, password: password.value }
