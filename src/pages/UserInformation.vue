@@ -1,5 +1,7 @@
 <script setup>
 import { useTrendsStore } from "../stores/trends";
+import { useFavoriteTrendStore } from "../stores/favorite_trend";
+const favorite_store = useFavoriteTrendStore();
 
 const trend_store = useTrendsStore()
 </script>
@@ -10,6 +12,6 @@ const trend_store = useTrendsStore()
   </div>
   <div>
     liked:
-    {{ trend_store.liked }}
+    {{ favorite_store.favorite_trends }}
   </div>
 </template>

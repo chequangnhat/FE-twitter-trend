@@ -1,12 +1,15 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useTrendsStore } from "../stores/trends";
 import axios from "axios";
 import { useLoginStore } from "../stores/login";
+import { useUserIdStore } from "../stores/user";
 
 const trend_store = useTrendsStore();
 const login_store = useLoginStore();
+const user_store = useUserIdStore();
+
 
 const router = useRouter();
 const userName = ref("");
@@ -18,6 +21,7 @@ const password = ref("");
 //   console.log("clicked");
 // };
 const response = ref(null);
+const responseUserId = ref(null)
 
 const submitLogin = async () => {
   login_store.Login()
@@ -31,10 +35,26 @@ const submitLogin = async () => {
   console.log(response.value.data);
   console.log("access: ", response.value.data["access"]);
   console.log("refresh: ", response.value.data["refresh"]);
+
+  responseUserId.value = await axios.post(
+    "http://127.0.0.1:8000/trendapp/get_user_id/",  
+    { username: userName.value },
+    { headers: {"Authorization" : `Bearer ${localStorage.getItem("access")}`}},
+  );
+
+  console.log("responseUserId", responseUserId.value.data['id_user'])
+  user_store.setUserId(responseUserId.value.data['id_user'])
+  
   if (response.value.data["access"] && response.value.data["refresh"]) {
     router.push(`/home/${trend_store.woeid}`);
   }
 };
+
+
+watch(user_store, () => {
+  console.log("user_change", user_store.user_id)
+
+})
 </script>
 
 <template>

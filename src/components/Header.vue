@@ -3,11 +3,13 @@ import { useRouter } from "vue-router";
 import { ref, watch } from "vue";
 import { useTrendsStore } from "../stores/trends";
 import { useLoginStore } from "../stores/login";
+import { useUserIdStore } from "../stores/user";
 
 const router = useRouter();
 
 const trend_store = useTrendsStore();
 const login_store = useLoginStore();
+const user_store = useUserIdStore();
 
 const userInfo = () => {
   console.log("user info clicked");
@@ -24,6 +26,7 @@ watch(location_selected, () => {
   router.push(`/home/${location_selected.value}`)
   trend_store.changeWoeid(location_selected.value)
 })
+
 </script>
 
 <template>
@@ -36,7 +39,6 @@ watch(location_selected, () => {
         <span class="font-normal">day</span>
         <span class="font-semibold">trends</span>
       </div>
-
       <select
         v-model="location_selected"
         class="text-white bg-blue-500 border rounded text-base py-1 outline-none w-28"

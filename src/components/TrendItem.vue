@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="trend-item-container border-t flex justify-between items-center">
+  <div class="trend-item-container border-t flex justify-between items-center cursor-pointer">
     <div class="trend-left flex justify-between items-center">
       <div class="trend-number mx-3">{{ trend_index+1 }}</div>
       <div class="trend-content my-2">
