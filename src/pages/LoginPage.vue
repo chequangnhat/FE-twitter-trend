@@ -5,10 +5,12 @@ import { useTrendsStore } from "../stores/trends";
 import axios from "axios";
 import { useLoginStore } from "../stores/login";
 import { useUserIdStore } from "../stores/user";
+import { useFavoriteTrendStore } from "../stores/favorite_trend";
 
 const trend_store = useTrendsStore();
 const login_store = useLoginStore();
 const user_store = useUserIdStore();
+const favorite_store = useFavoriteTrendStore();
 
 
 const router = useRouter();
@@ -22,6 +24,9 @@ const password = ref("");
 // };
 const response = ref(null);
 const responseUserId = ref(null)
+const responseFavorites = ref(null)
+
+const list_favorite = ref([]);
 
 const submitLogin = async () => {
   login_store.Login()
@@ -44,6 +49,21 @@ const submitLogin = async () => {
 
   console.log("responseUserId", responseUserId.value.data['id_user'])
   user_store.setUserId(responseUserId.value.data['id_user'])
+
+  console.log("user id in store", user_store.user_id)
+  responseFavorites.value = await axios.get(
+    `http://127.0.0.1:8000/trendapp/get_favorite_trend/${user_store.user_id.toString()}/`,  
+    { headers: {"Authorization" : `Bearer ${localStorage.getItem("access")}`}},
+  );
+
+  console.log("responseFavorites", responseFavorites.value.data["result"])
+  list_favorite.value = responseFavorites.value.data["result"]
+  list_favorite.value.forEach((item, index) => {
+    favorite_store.addFavoriteTrend(item);
+    favorite_store.addTrendName(item.name)
+  });
+
+  console.log("list trendname", favorite_store.list_trend_name)
   
   if (response.value.data["access"] && response.value.data["refresh"]) {
     router.push(`/home/${trend_store.woeid}`);

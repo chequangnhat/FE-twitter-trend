@@ -8,7 +8,7 @@
       <div class="trend-number mx-3">{{ trend_index+1 }}</div>
       <div class="trend-content my-2">
         <div class="trend-title text-xl">{{ trend["name"] }}</div>
-        <div class="tweet-nums text-stone-500 text-sm">{{ trend["tweet_volume"] == None ? "Under 10" : (trend["tweet_volume"]/1000 + trend["tweet_volume"]%1000).toFixed(1) }}K tweets</div>
+        <div class="tweet-nums text-stone-500 text-sm">{{ trend["tweet_volume"] == 9999 ? "Under 10" : (trend["tweet_volume"]/1000 + trend["tweet_volume"]%1000).toFixed(1) }}K tweets</div>
       </div>
     </div>
     <div class="trend-right mr-3 text-stone-500"><font-awesome-icon icon="fa-solid fa-angle-right" /></div>

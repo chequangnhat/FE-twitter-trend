@@ -46,8 +46,8 @@ const get_data = async () => {
 
   
   console.log(response.value.data["id_user"]);
-  console.log(response.value.data["result"]["trends"]);
-  list_trends.value = response.value.data["result"]["trends"];
+  console.log(response.value.data["result"]);
+  list_trends.value = response.value.data["result"];
   if (trend_store.trends.length > 0) {
     trend_store.deleteAllTrends();
   }

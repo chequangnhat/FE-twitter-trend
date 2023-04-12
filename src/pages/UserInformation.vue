@@ -1,8 +1,29 @@
 <script setup>
 import { useFavoriteTrendStore } from "../stores/favorite_trend";
 import TrendItem from "../components/TrendItem.vue";
+import { ref, onBeforeMount } from "vue";
+import axios from "axios";
+import { useUserIdStore } from "../stores/user";
 
+const user_store = useUserIdStore();
 const favorite_store = useFavoriteTrendStore();
+
+// const favoriteResponse = ref(null)
+// const getFavorite = async () => {
+//   favoriteResponse.value = await axios.post(
+//     "http://127.0.0.1:8000/trendapp/get_favorite_trend/",
+//     {
+//       user_id: user_store.user_id, 
+//     },
+//     { headers: { Authorization: `Bearer ${localStorage.getItem("access")}` } }
+//   );
+
+//   console.log("favoriteResponse: ", favoriteResponse.value);
+// };
+
+// onBeforeMount(()=>{
+//   getFavorite()
+// })
 </script>
 
 <template>

@@ -4,12 +4,14 @@ import { ref, watch } from "vue";
 import { useTrendsStore } from "../stores/trends";
 import { useLoginStore } from "../stores/login";
 import { useUserIdStore } from "../stores/user";
+import { useFavoriteTrendStore } from "../stores/favorite_trend";
 
 const router = useRouter();
 
 const trend_store = useTrendsStore();
 const login_store = useLoginStore();
 const user_store = useUserIdStore();
+const favorite_store = useFavoriteTrendStore();
 
 const userInfo = () => {
   console.log("user info clicked");
@@ -26,6 +28,14 @@ watch(location_selected, () => {
   router.push(`/home/${location_selected.value}`)
   trend_store.changeWoeid(location_selected.value)
 })
+
+const onLogout = () => {
+  login_store.Logout()
+  user_store.deleteUserId()
+  favorite_store.deleteAllFavoriteTrend()
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
+}
 
 </script>
 
@@ -61,7 +71,7 @@ watch(location_selected, () => {
           <font-awesome-icon icon="fa-solid fa-user" class="text-lg" />
         </div>
       </button>
-      <button v-if="login_store.isLogin" class="border py-1 px-2 rounded-md ml-3"  @click="login_store.Logout">
+      <button v-if="login_store.isLogin" class="border py-1 px-2 rounded-md ml-3"  @click="onLogout()">
        <p class="text-base">Logout</p> 
       </button>
       <button v-if="!login_store.isLogin" class="border py-1 px-2 rounded-md ml-3" @click="router.push('/login')">

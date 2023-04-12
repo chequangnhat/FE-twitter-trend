@@ -10,5 +10,8 @@ export const useUserIdStore = defineStore("userId", {
     setUserId(id){
       this.user_id = id
     },
+    deleteUserId(){
+      this.user_id = null;
+    }
   },
 });
